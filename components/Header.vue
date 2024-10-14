@@ -8,6 +8,21 @@
         <li><NuxtLink to="/profile">Profile</NuxtLink></li>
       </ul>
     </nav>
-    <button>Logout</button>
+    <button v-if="authenticated" @click="handleLogout">Logout</button>
   </header>
 </template>
+
+<script setup>
+import { useAuthStore } from '~/store/auth';
+
+const router = useRouter();
+
+const { logUserOut } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+
+const handleLogout = () => {
+  logUserOut();
+  router.push('/');
+}
+
+</script>

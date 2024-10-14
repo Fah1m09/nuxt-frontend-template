@@ -16,7 +16,7 @@
         class="bg-white rounded-[10px] shadow p-[20px] space-y-2"
       >
         <img
-          :src="JSON.parse(product?.images[0])[0]"
+          :src="product?.images[0]"
           alt="product image"
           class="w-[400px] h-[400px]"
         />
@@ -28,13 +28,12 @@
   </section>
 </template>
 <script setup lang="ts">
-import { API_ROUTES } from '../utils/apis'
+import { API_ROUTES } from '../utils/apis';
 
 const requestFetch = useRequestFetch();
  
 const { data: products, pending, error } = await useAsyncData(() =>
   requestFetch(API_ROUTES.PRODUCT_URL)
 );
-
 
 </script>

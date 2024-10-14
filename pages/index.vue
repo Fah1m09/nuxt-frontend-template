@@ -21,7 +21,7 @@
                   >Your email</label
                 >
                 <input
-                  v-model="email"
+                  v-model="formData.email"
                   type="email"
                   name="email"
                   id="email"
@@ -37,7 +37,7 @@
                   >Password</label
                 >
                 <input
-                  v-model="password"
+                  v-model="formData.password"
                   type="password"
                   name="password"
                   id="password"
@@ -64,21 +64,32 @@
 
 <script setup>
 
-import { useAuth } from '~/composables/useAuth'
-import { ref } from 'vue'
+definePageMeta({
+  layout: 'login',
+});
 
-const { login, logout, accessToken, refreshAccessToken } = useAuth()
+import { storeToRefs } from 'pinia';
+import { reactive } from 'vue';
+import { useAuthStore } from '~/store/auth';
 
-const email = ref('')
-const password = ref('')
+const { authenticateUser } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+
+const formData = reactive({ email: '', password: '' })
+
+const router = useRouter();
 
 const handleLogin = async () => {
-  await login({ email: email.value, password: password.value })
-  console.log('Access Token:', accessToken.value)
-}
+  const payload = {
+    email: formData.email,
+    password: formData.password 
+  }
 
-const handleLogout = () => {
-  logout()
+  await authenticateUser(payload); // call authenticateUser and pass the user object
+  // redirect to homepage if user is authenticated
+  if (authenticated) {
+    router.push('/dashboard');
+  }
 }
 
 </script>
