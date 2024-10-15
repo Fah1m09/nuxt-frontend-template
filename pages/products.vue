@@ -5,7 +5,8 @@
       <input
         type="text"
         placeholder="search"
-        class="px-4 py-2 rounded-md border-2"
+        v-model="searchQuery"
+        class="px-4 py-2 rounded-md border-2 text-black"
       />
     </div>
     <div v-if="pending">Fetching...</div>
@@ -51,27 +52,28 @@
   </section>
 </template>
 <script setup>
-import { ref } from "vue";
 import { API_ROUTES } from "../utils/apis";
 
 const currentPage = ref(1);
 const searchQuery = ref("");
 const itemsPerPage = ref(8);
 
-const { data: products } = await useAsyncData(
-  "posts",
+const { data: products, error, pending } = await useAsyncData(
+  "get",
   () =>
     $fetch(`${API_ROUTES.PRODUCT_URL}`, {
       params: {
-        offset: itemsPerPage.value * currentPage.value,
+        offset: currentPage.value === 1 ? 0 : currentPage.value * itemsPerPage.value,
         limit: itemsPerPage.value,
+        title: searchQuery.value
       },
     }),
   {
-    watch: [currentPage],
+    watch: [currentPage, searchQuery],
   }
+  
 );
-
+console.log(products.value);
 // Fetch products with pagination and search
 // const changePage = (page) => {
 //   currentPage.value =
