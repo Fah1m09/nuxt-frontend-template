@@ -10,15 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "nuxt": "^3.13.0",
+    "vee-validate": "^4.13.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vue3-toastify": "^0.2.3"
   },
   "devDependencies": {
     "@pinia/nuxt": "^0.5.5",
     "autoprefixer": "^10.4.20",
     "pinia": "^2.2.4",
     "postcss": "^8.4.47",
+    "shadcn-nuxt": "^0.10.4",
     "tailwindcss": "^3.4.13"
   }
 }
