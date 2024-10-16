@@ -53,7 +53,7 @@
               >
                 Sign in
               </button>
-              
+              <Button>Click me</Button>
             </form>
           </div>
         </div>
@@ -63,10 +63,6 @@
 </template>
 
 <script setup>
-
-definePageMeta({
-  layout: 'login',
-});
 
 import { storeToRefs } from 'pinia';
 import { reactive } from 'vue';
